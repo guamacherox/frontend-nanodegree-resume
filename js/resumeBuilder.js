@@ -27,8 +27,7 @@ var bio = {
   },
   "welcomeMessage": "lorem ipsum dolor sit amet ipsum sit amet",
   "skills": skills,
-  "bioPic": "images/fry.jpg",
-  "display": "function(){}"
+  "bioPic": "images/fry.jpg"
 };
 
 var work = {
@@ -48,8 +47,7 @@ var work = {
       "dates": "2014",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
-  ],
-  "display": ""
+  ]
 };
 
 var education = {
@@ -86,8 +84,7 @@ var education = {
       "date":"12/01/2016",
       "url": "http://loremsite.com"
     }
-  ],
-  "display": ""
+  ]
 };
 
 var projects = {
@@ -97,19 +94,27 @@ var projects = {
       "dates": "2014",
       "description": "lorem ipsum dolor sit amet ipsum si amet lorem",
       "images":[
-        "http://lorempixel.com/200/200/",
-        "http://lorempixel.com/200/200/"
-      ]
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/"
+              ]
+    },
+    {
+      "title": "Project Ipsum",
+      "dates": "2015",
+      "description": "lorem ipsum dolor sit amet ipsum si amet lorem",
+      "images":[
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/",
+                "http://lorempixel.com/200/200/"
+              ]
     }
-  ],
-  "display":""
+  ]
 };
 
-var formattedName = HTMLheaderName.replace("%data%",bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
 
-$("#header").append(formattedRole);
-$("#header").prepend(formattedName);
 
 var displayWork = function(){
 
@@ -141,8 +146,46 @@ var displayWork = function(){
 function inName(name){
   name = name.trim().split(" ");
   console.log(name);
-  name[1].toUpperCase();
+  name[1] = name[1].toUpperCase();
   name[0] = name[0].slice(0,1).toUpperCase() + name[0].slice(1).toLowerCase();
+  console.log(name);
 
   return name[0] + " " + name[1];
 }
+
+var cont = 0;
+projects.display = function(){
+  for(var project in projects.projects){
+    $("#projects").append(HTMLprojectStart);
+
+    var formatedProjectTitle = HTMLprojectTitle.replace("%data%",projects.projects[project].title);
+    $(".project-entry:last-child").append(formatedProjectTitle);
+
+    var formatedProjectDates = HTMLprojectDates.replace("%data%",projects.projects[project].dates);
+    $(".project-entry:last-child").append(formatedProjectDates);
+
+    var formatedDescription = HTMLprojectDescription.replace("%data%",projects.projects[project].description);
+    $(".project-entry:last-child").append(formatedDescription);
+
+    if(projects.projects[project].images.length > 0){
+      for(var image in projects.projects[project].images){
+        var formatedImage = HTMLprojectImage.replace("%data%",projects.projects[project].images[image]);
+        $(".project-entry:last-child").append(formatedImage);
+      }
+    }
+    cont = cont + 1;
+    console.log(cont);
+  }
+};
+
+$("#main").append(internationalizeButton);
+var formattedName = HTMLheaderName.replace("%data%",bio.name);
+var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+
+$("#header").append(formattedRole);
+$("#header").prepend(formattedName);
+
+displayWork();
+projects.display();
+
+$("#mapDiv").append(googleMap);
